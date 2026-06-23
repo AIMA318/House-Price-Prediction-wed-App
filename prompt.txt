@@ -1,0 +1,23 @@
+Use the pre-trained model by using the following code:
+```
+import pickle
+model_svc = pickle.load(open('model_svc.pkl', 'rb'))  # Model Loading
+```
+
+the preprocessed dataset is available in file `processed_data.csv` having the data as:
+```
+price,bedrooms,bathrooms,sqft_living,sqft_lot,floors,waterfront,view,condition,sqft_above,sqft_basement,yr_built,yr_renovated,street,city,statezip
+313000,3,1,1340,7912,1,0,0,3,1340,0,1955,2005,1502,36,62
+2384000,5,2,3650,9050,2,0,4,5,3370,280,1921,0,3858,35,58
+342000,3,2,1930,11947,1,0,0,4,1930,0,1966,0,2265,18,26
+420000,3,2,2000,8030,1,0,0,4,1000,1000,1963,0,4219,3,7
+550000,4,2,2140,14852,1,0,0,4,1140,800,1976,1992,4305,31,31
+```
+target column is price
+and other columns are features
+
+make dropdowns for all the features and take the values for dropdown from the file `processed_data.csv` 
+except the sqft_above, sqft_basement, sqft_lot, sqft_living columns, and add a button to predict the price
+
+
+Create a flask based web application, and make it dyanmic, and visually appealing and aesthetically pleasing and responsive.

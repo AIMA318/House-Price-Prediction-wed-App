@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Theme Toggle -->
+        <div class="theme-toggle">
+            <label for="theme-toggle">🌙 Dark Mode</label>
+            <div class="toggle-switch" onclick="toggleTheme()" id="theme-toggle"></div>
+        </div>
+        
+        <h1>🏠 House Price Prediction</h1>
+
+        <!-- Prediction result displayed at the top -->
+        {% if predicted_price %}
+        <div class="result">
+            <h2>💰 Predicted Price: ${{ "{:,.2f}".format(predicted_price) }}</h2>
+        </div>
+        {% endif %}
+        
+        <!-- Form for inputs -->
+        <form method="POST">
+            <div class="form-row">
+                <div class="column">
+                    <h3 style="margin-bottom: 15px; color: #667eea; font-weight: 600;">Property Features</h3>
+                    {% for feature, values in dropdown_values.items() %}
+                    <div class="input-group">
+                        <label for="{{ feature }}">{{ feature.replace('_', ' ').title() }}:</label>
+                        <select name="{{ feature }}" id="{{ feature }}" required>
+                            <option value="">Select {{ feature.replace('_', ' ').title() }}</option>
+                            {% for value in values %}
+                            <option value="{{ value }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="column">
+                    <h3 style="margin-bottom: 15px; color: #667eea; font-weight: 600;">Square Footage Details</h3>
+                    
+                    <div class="input-group">
+                        <label for="sqft_living">🏠 Living Area (sq ft):</label>
+                        <input type="number" name="sqft_living" id="sqft_living" placeholder="e.g., 2000" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="sqft_lot">🌿 Lot Size (sq ft):</label>
+                        <input type="number" name="sqft_lot" id="sqft_lot" placeholder="e.g., 8000" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="sqft_above">⬆️ Above Ground (sq ft):</label>
+                        <input type="number" name="sqft_above" id="sqft_above" placeholder="e.g., 1800" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="sqft_basement">⬇️ Basement (sq ft):</label>
+                        <input type="number" name="sqft_basement" id="sqft_basement" placeholder="e.g., 200" required>
+                    </div>
+
+                    <button type="submit" class="predict-btn">🔮 Predict House Price</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Function to toggle between light and dark mode
+        function toggleTheme() {
+            const body = document.body;
+            const label = document.querySelector('.theme-toggle label');
+            
+            body.classList.toggle('dark-theme');
+            
+            // Update label text and icon
+            if (body.classList.contains('dark-theme')) {
+                label.textContent = '☀️ Light Mode';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                label.textContent = '🌙 Dark Mode';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const body = document.body;
+            const label = document.querySelector('.theme-toggle label');
+            
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-theme');
+                label.textContent = '☀️ Light Mode';
+            }
+        });
+
+        // Add smooth scrolling to result when prediction is made
+        {% if predicted_price %}
+        document.addEventListener('DOMContentLoaded', function() {
+            const result = document.querySelector('.result');
+            if (result) {
+                result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+        {% endif %}
+    </script>
+</body>
+</html>
