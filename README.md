@@ -83,10 +83,6 @@ Run the Application
 
 python app.py
 
-Open in Browser
-
-http://127.0.0.1:5000
-
 Machine Learning Model
 
 The application uses a trained Scikit-Learn regression model saved as "model_svc.pkl". The model analyzes housing features and predicts an estimated market price for the property.
